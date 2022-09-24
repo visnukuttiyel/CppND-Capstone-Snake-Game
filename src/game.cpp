@@ -74,7 +74,7 @@ void Game::Update() {
   int new_y = static_cast<int>(snake.head_y);
 
   // Check if there's food over here
-  if (food.x == new_x && food.y == new_y) {
+  if (snake.SnakeCell(food.x, food.y)) {
     score++;
     PlaceFood();
     // Grow snake and increase speed.

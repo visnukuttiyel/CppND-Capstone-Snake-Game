@@ -12,7 +12,7 @@ class Snake {
       : grid_width(grid_width),
         grid_height(grid_height),
         head_x(grid_width / 2),
-        head_y(grid_height / 2) {}
+        head_y(grid_height-5) {}
 
   void Update();
 
@@ -22,7 +22,10 @@ class Snake {
   Direction direction = Direction::kUp;
 
   float speed{0.1f};
-  int size{1};
+  int size{3};
+  const float THETA_MAX{3.14/6};
+  float theta{3.14/6};
+  float delta_theta{0.01};
   bool alive{true};
   float head_x;
   float head_y;
