@@ -18,6 +18,7 @@ class Snake {
 
   void GrowBody();
   bool SnakeCell(int x, int y);
+  float Clip(float n, float lower, float upper);
 
   Direction direction = Direction::kUp;
 

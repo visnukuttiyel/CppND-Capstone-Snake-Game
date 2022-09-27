@@ -6,6 +6,7 @@
 #include "controller.h"
 #include "renderer.h"
 #include "snake.h"
+#include "tank.h"
 
 class Game {
  public:
@@ -17,6 +18,7 @@ class Game {
 
  private:
   Snake snake;
+  std::vector<Tank> tanks;
   SDL_Point food;
 
   std::random_device dev;
@@ -28,6 +30,7 @@ class Game {
 
   void PlaceFood();
   void Update();
+  void PlaceTank(int grid_width, int grid_height);
 };
 
 #endif

@@ -2,6 +2,8 @@
 #include <cmath>
 #include <iostream>
 
+
+
 void Snake::Update() {
   SDL_Point prev_cell{
       static_cast<int>(head_x),
@@ -41,8 +43,10 @@ void Snake::UpdateHead() {
   }
 
   // Wrap the Snake around to the beginning if going off of the screen.
-  head_x = fmod(head_x + grid_width, grid_width);
-  head_y = fmod(head_y + grid_height, grid_height);
+  head_x = Clip(head_x, 0, grid_width);
+  head_y = Clip(head_y, 0, grid_height);
+  
+
 }
 
 void Snake::UpdateBody(SDL_Point &current_head_cell, SDL_Point &prev_head_cell) {
@@ -89,4 +93,8 @@ bool Snake::SnakeCell(int x, int y) {
     }
   }
   return false;
+}
+
+float Snake::Clip(float n, float lower, float upper) {
+  return std::max(lower, std::min(n, upper));
 }
