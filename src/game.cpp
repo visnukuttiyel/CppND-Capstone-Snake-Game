@@ -70,13 +70,15 @@ void Game::Update() {
   if (!snake.alive) return;
 
   snake.Update();
-  for (Tank &tank:tanks)
-  {
-    tank.Update();
-  }
 
   int new_x = static_cast<int>(snake.head_x);
   int new_y = static_cast<int>(snake.head_y);
+
+  for (Tank &tank:tanks)
+  {
+    tank.Update(new_x, new_y);
+  }
+
 
   // Check if there's food over here
   if (snake.SnakeCell(food.x, food.y)) {
@@ -93,9 +95,9 @@ int Game::GetSize() const { return snake.size; }
 
 void Game::PlaceTank(int grid_width, int grid_height) {
 
-tanks.emplace_back(Tank (0,0));
+// tanks.emplace_back(Tank (0,0));
 tanks.emplace_back(Tank (grid_width, 0));
-tanks.emplace_back(Tank (0, grid_height));
+// tanks.emplace_back(Tank (0, grid_height));
 tanks.emplace_back(Tank (grid_width, grid_height));
 
 

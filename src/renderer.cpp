@@ -71,11 +71,22 @@ void Renderer::Render(Snake const snake, SDL_Point const &food, std::vector<Tank
   }
   SDL_RenderFillRect(sdl_renderer, &block);
 
-  // Render tanks
-  // for(Tanks const tank:tanks)
-  // {
+  // // Render tanks
+  for(Tank const tank:tanks)
+  {
+    for (SDL_Point const &point : tank.body) {
+    block.x = point.x * block.w;
+    block.y = point.y * block.h;
+    SDL_RenderFillRect(sdl_renderer, &block);
+    }
 
-  // }
+    for (SDL_Point const &point : tank.bullet.body) {
+    block.x = point.x * block.w;
+    block.y = point.y * block.h;
+    SDL_RenderFillRect(sdl_renderer, &block);
+    }
+    
+  }
 
   // Update Screen
   SDL_RenderPresent(sdl_renderer);
