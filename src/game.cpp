@@ -95,9 +95,9 @@ int Game::GetSize() const { return snake.size; }
 
 void Game::PlaceTank(int grid_width, int grid_height) {
 
-// tanks.emplace_back(Tank (0,0));
+tanks.emplace_back(Tank (0,0));
 tanks.emplace_back(Tank (grid_width, 0));
-// tanks.emplace_back(Tank (0, grid_height));
+tanks.emplace_back(Tank (0, grid_height));
 tanks.emplace_back(Tank (grid_width, grid_height));
 
 

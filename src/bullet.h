@@ -20,29 +20,40 @@ public:
     };
 
     Bullet(int pos_x, int pos_y)
-        : pos_x(pos_x),
-          pos_y(pos_y)
+        : start_x(pos_x),
+          start_y(pos_y)
     {
-        body.emplace_back(SDL_Point{static_cast<int>(pos_x), static_cast<int>(pos_y)});
-        theta = atan((50-pos_y)/(50-pos_x));
+        Reset();
+        
     }
 
     void Update(int const &target_x, int const &target_y);
 
     float life_time{2}; // 2s life time of the bullet
 
-    float speed{0.0001f};
+    float speed{0.50f};
     float theta{kPHI / 4};
-    float theta_dot{0.0f};
     bool targetdead{false};
 
     std::vector<SDL_Point> body;
 
+    float pos_x;
+    float pos_y;
+    float a{0};
+    float b{0};
+
 private:
     float BangBangControl(float deltatheta);
+    void Reset();
+    void UpadatePath(int const &target_x, const int &target_y);
+    void UpdatePosition();
+    float EvaluateY(float x);
+    float start_x;
+    float start_y;
 
-    int pos_x;
-    int pos_y;
+
+  
+
 };
 
 #endif
