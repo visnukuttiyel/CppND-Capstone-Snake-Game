@@ -17,7 +17,7 @@ class Tank {
            body.emplace_back(SDL_Point{static_cast<int>(pos_x), static_cast<int>(pos_y)});
         }
 
-  void Update(int const &target_x, int const &target_y);
+  bool Update(int const &target_x, int const &target_y);
   std::vector<SDL_Point> GetBulletBody();
 
   int count{0};

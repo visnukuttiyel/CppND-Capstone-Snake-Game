@@ -76,7 +76,8 @@ void Game::Update() {
 
   for (Tank &tank:tanks)
   {
-    tank.Update(new_x, new_y);
+    if (tank.Update(new_x, new_y)){snake.alive = false;}
+
   }
 
 
@@ -88,6 +89,7 @@ void Game::Update() {
     snake.GrowBody();
     snake.speed += 0.02;
   }
+
 }
 
 int Game::GetScore() const { return score; }

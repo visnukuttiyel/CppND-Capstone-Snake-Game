@@ -27,13 +27,15 @@ public:
         
     }
 
-    void Update(int const &target_x, int const &target_y);
+    bool Update(int const &target_x, int const &target_y);
 
     float life_time{2}; // 2s life time of the bullet
 
-    float speed{0.50f};
+    float speed{0.10f};
     float theta{kPHI / 4};
     bool targetdead{false};
+    float const trail_length{10};
+    float const pos_error{0.1};
 
     std::vector<SDL_Point> body;
 
@@ -41,6 +43,7 @@ public:
     float pos_y;
     float a{0};
     float b{0};
+    int counter{0};
 
 private:
     float BangBangControl(float deltatheta);

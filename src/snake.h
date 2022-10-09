@@ -22,7 +22,7 @@ class Snake {
 
   Direction direction = Direction::kUp;
 
-  float speed{0.1f};
+  float speed{0.3f};
   int size{3};
   const float THETA_MAX{3.14/6};
   float theta{3.14/6};
