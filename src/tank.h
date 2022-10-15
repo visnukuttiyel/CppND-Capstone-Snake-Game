@@ -4,8 +4,10 @@
 #include <vector>
 #include "SDL.h"
 #include "bullet.h"
+#include "battlefield.h"
 
-class Tank {
+class Tank: public BattleField 
+{
  public:
   enum class Direction { kUp, kDown, kLeft, kRight };
 

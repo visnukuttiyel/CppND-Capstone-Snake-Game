@@ -38,7 +38,7 @@ Renderer::~Renderer() {
   SDL_Quit();
 }
 
-void Renderer::Render(Snake const snake, SDL_Point const &food, std::vector<Tank> const &tanks) {
+void Renderer::Render(Snake const snake, SDL_Point const &food, std::vector<std::shared_ptr<Tank>> const &tanks) {
   SDL_Rect block;
   block.w = screen_width / grid_width;
   block.h = screen_height / grid_height;
@@ -72,14 +72,14 @@ void Renderer::Render(Snake const snake, SDL_Point const &food, std::vector<Tank
   SDL_RenderFillRect(sdl_renderer, &block);
 
   // // Render tanks
-  for(Tank tank:tanks)
+  for(auto tank:tanks)
   {
-    for (SDL_Point const &point : tank.body) {
+    for (SDL_Point const &point : tank->body) {
     block.x = point.x * block.w;
     block.y = point.y * block.h;
     SDL_RenderFillRect(sdl_renderer, &block);
     }
-    std::vector<SDL_Point> bullet_body = tank.GetBulletBody();
+    std::vector<SDL_Point> bullet_body = tank->GetBulletBody();
     for (SDL_Point const &point : bullet_body) {
     block.x = point.x * block.w;
     block.y = point.y * block.h;

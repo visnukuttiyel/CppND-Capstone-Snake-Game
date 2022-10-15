@@ -4,6 +4,9 @@
 #include <vector>
 #include "SDL.h"
 #include <cmath>
+#include <chrono>
+#include "battlefield.h"
+
 
 
 constexpr float kPHI{3.14};
@@ -13,7 +16,7 @@ struct Point
     float y;
 };
 
-class Bullet
+class Bullet : public BattleField 
 {
 public:
     enum class Direction
@@ -35,8 +38,6 @@ public:
     void SetTarget(int const &target_x, int const &target_y);
 
     std::vector<SDL_Point> GetBulletBody();
-    bool GetTargetDead();
-
     void Update();
 
 
@@ -44,7 +45,7 @@ public:
     float life_time{2}; // 2s life time of the bullet
     float speed{0.10f};
     float theta{kPHI / 4};
-    float const trail_length{10};
+    float const trail_length{20};
     float const pos_error{0.1};
 
     Point current_position;
@@ -58,11 +59,9 @@ private:
     void UpadatePosition();
     float EvaluateY(float x);
 
-    bool target_dead_{false};
     Point start_position_;
     Point target_position_;
     std::vector<SDL_Point> body;
-
 };
 
 #endif

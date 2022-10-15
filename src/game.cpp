@@ -74,11 +74,11 @@ void Game::Update() {
   int new_x = static_cast<int>(snake.head_x);
   int new_y = static_cast<int>(snake.head_y);
 
-  for (Tank &tank:tanks)
+  for (auto tank:tanks)
   {
-    tank.Update(new_x,new_y);
+    tank->Update(new_x,new_y);
 
-    SDL_Point bullet_postion = tank.bullet.GetBulletBody().back();
+    SDL_Point bullet_postion = tank->bullet.GetBulletBody().back();
     snake.alive = snake.alive && !snake.SnakeCell(bullet_postion.x, bullet_postion.y);
 
   }
@@ -98,9 +98,9 @@ int Game::GetScore() const { return score; }
 
 void Game::PlaceTank(int grid_width, int grid_height) {
 
-tanks.emplace_back(Tank (0,0));
-tanks.emplace_back(Tank (grid_width, 0));
-tanks.emplace_back(Tank (0, grid_height));
-tanks.emplace_back(Tank (grid_width, grid_height));
+tanks.push_back(std::make_shared<Tank>(0,0));
+tanks.push_back(std::make_shared<Tank>(grid_width, 0));
+tanks.push_back(std::make_shared<Tank>(0, grid_height));
+tanks.push_back(std::make_shared<Tank>(grid_width, grid_height));
 
 }

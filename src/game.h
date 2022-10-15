@@ -18,7 +18,7 @@ class Game {
 
  private:
   Snake snake;
-  std::vector<Tank> tanks;
+  std::vector<std::shared_ptr<Tank>> tanks;
   SDL_Point food;
 
   std::random_device dev;
