@@ -6,6 +6,10 @@
 #include <cmath>
 #include <chrono>
 #include "battlefield.h"
+#include <mutex>
+#include <deque>
+#include <condition_variable>
+//#include "message.h"
 
 
 
@@ -15,6 +19,21 @@ struct Point
     float x;
     float y;
 };
+
+
+
+template <class T>
+class MessageQueue
+{
+public:
+    T receive();
+    void send(T &&msg);
+private:
+    std::mutex _mutex;
+    std::condition_variable _condition;
+    std::deque<T> _queue;
+};
+
 
 class Bullet : public BattleField 
 {
@@ -43,7 +62,7 @@ public:
 
 
     float life_time{2}; // 2s life time of the bullet
-    float speed{0.10f};
+    float speed{0.05f};
     float theta{kPHI / 4};
     float const trail_length{20};
     float const pos_error{0.1};
@@ -62,6 +81,7 @@ private:
     Point start_position_;
     Point target_position_;
     std::vector<SDL_Point> body;
+    MessageQueue<Point> bullet_msg_queue_;
 };
 
 #endif
