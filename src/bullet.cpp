@@ -2,24 +2,23 @@
 #include <iostream>
 #include <math.h>
 
-bool Bullet::Update(int const &target_x, const int &target_y) {
+void Bullet::Update() {
 
-if (targetdead){return targetdead;}
-UpadatePath(target_x, target_y);
-UpdatePosition();
-if ((pos_y <0) || (pos_y > 100)||(pos_x <0) || (pos_x > 100))
+UpadatePosition();
+
+if ((current_position.y <0) || (current_position.y > 100)||(current_position.x <0) || (current_position.x > 100))
 {
     Reset();
 }
-body.emplace_back(SDL_Point{static_cast<int>(pos_x), static_cast<int>(pos_y)});
-if ((std::abs(pos_x - target_x) < pos_error) && (std::abs(pos_y - target_y) < pos_error) ) { targetdead = true;}
+body.emplace_back(SDL_Point{static_cast<int>(current_position.x), static_cast<int>(current_position.y)});
+if ((std::abs(current_position.x - target_position_.x) < pos_error) && (std::abs(current_position.y - target_position_.y) < pos_error) ) { target_dead_ = true;}
 counter++;
-if (counter > 3)
+if (counter > trail_length)
 {
     counter--;
     body.erase(body.begin());
 } 
-return targetdead;
+
 }
 
 float Bullet::BangBangControl(float const error)
@@ -38,28 +37,17 @@ float Bullet::BangBangControl(float const error)
 
 }
 
-void Bullet::UpadatePath(int const &target_x, const int &target_y)
+void Bullet::UpadatePosition()
 {
-    float a_current{a};
-    float b_current{b};
-    
-      
-    theta = atan((target_y-pos_y)/(target_x-pos_x));
+    theta = atan((target_position_.y-current_position.y)/(target_position_.x-current_position.x));
     b = (theta);
-    a = pos_y - b*pos_x;
+    a = current_position.y - b*current_position.x;
 
-    pos_x = pos_x + speed*cos(theta)*BangBangControl(target_x-pos_x);
+    current_position.x = current_position.x + speed*cos(theta)*BangBangControl(target_position_.x-current_position.x);
+    current_position.y = EvaluateY(current_position.x);
     
     }
-
- void Bullet::UpdatePosition()
-    {
-
-    pos_y = EvaluateY(pos_x);
    
-
-    }
-    
 float Bullet::EvaluateY(float x)
 {
     return (a + b*x);
@@ -68,11 +56,26 @@ float Bullet::EvaluateY(float x)
 void Bullet::Reset()
 {
     body.clear();
-    targetdead =false;
+    target_dead_ =false;
     counter = 0;
-    pos_x = start_x;
-    pos_y = start_y;
-    theta = atan((50-pos_y)/(50-pos_x));
-    body.emplace_back(SDL_Point{static_cast<int>(pos_x), static_cast<int>(pos_y)});
+    current_position = start_position_;
+    theta = atan((50-current_position.y)/(50-current_position.x));
+    body.emplace_back(SDL_Point{static_cast<int>(current_position.x), static_cast<int>(current_position.y)});
 
 }
+
+void Bullet::SetTarget(int const &target_x, int const &target_y)
+{
+        target_position_.x = target_x;
+        target_position_.y = target_y;
+}
+
+ std::vector<SDL_Point> Bullet::GetBulletBody()
+ {
+    return body;
+ }
+
+ bool Bullet::GetTargetDead()
+ {
+    return target_dead_;
+ }

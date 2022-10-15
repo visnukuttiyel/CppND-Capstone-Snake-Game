@@ -4,19 +4,19 @@
 
 
 
-bool Tank::Update(int const &target_x, int const &target_y) {
+void Tank::Update(int const &target_x, int const &target_y) {
 
- if (count > 1 ){
-  bullet.Update(target_x,target_y);
-  count =0;
- } 
+//  if (count > 1 ){
+//   bullet.Update(target_x,target_y);
+//   count =0;
+//  } 
 count++;
-
-return bullet.Update(target_x,target_y);
+bullet.SetTarget(target_x,target_y);
+bullet.Update();
 
 }
 
 std::vector<SDL_Point> Tank::GetBulletBody()
 {
-  return bullet.body;
+  return bullet.GetBulletBody();
 }

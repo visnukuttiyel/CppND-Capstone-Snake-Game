@@ -76,7 +76,10 @@ void Game::Update() {
 
   for (Tank &tank:tanks)
   {
-    if (tank.Update(new_x, new_y)){snake.alive = false;}
+    tank.Update(new_x,new_y);
+
+    SDL_Point bullet_postion = tank.bullet.GetBulletBody().back();
+    snake.alive = snake.alive && !snake.SnakeCell(bullet_postion.x, bullet_postion.y);
 
   }
 
@@ -86,14 +89,12 @@ void Game::Update() {
     score++;
     PlaceFood();
     // Grow snake and increase speed.
-    snake.GrowBody();
     snake.speed += 0.02;
   }
 
 }
 
 int Game::GetScore() const { return score; }
-int Game::GetSize() const { return snake.size; }
 
 void Game::PlaceTank(int grid_width, int grid_height) {
 
@@ -101,6 +102,5 @@ tanks.emplace_back(Tank (0,0));
 tanks.emplace_back(Tank (grid_width, 0));
 tanks.emplace_back(Tank (0, grid_height));
 tanks.emplace_back(Tank (grid_width, grid_height));
-
 
 }

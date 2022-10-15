@@ -16,14 +16,12 @@ class Snake {
 
   void Update();
 
-  void GrowBody();
   bool SnakeCell(int x, int y);
   float Clip(float n, float lower, float upper);
 
   Direction direction = Direction::kUp;
 
   float speed{0.3f};
-  int size{3};
   const float THETA_MAX{3.14/6};
   float theta{3.14/6};
   float delta_theta{0.01};
@@ -36,7 +34,6 @@ class Snake {
   void UpdateHead();
   void UpdateBody(SDL_Point &current_cell, SDL_Point &prev_cell);
 
-  bool growing{false};
   int grid_width;
   int grid_height;
 };
